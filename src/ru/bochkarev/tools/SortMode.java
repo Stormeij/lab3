@@ -25,9 +25,14 @@ public class SortMode implements Comparator<Point>
 		{
 			res = p2.getName().compareTo(p1.getName());
 		}
-		else
+		else if (sortMode == 3)
 		{
 			if (p1.distance() > p2.distance()) res = 1;
+			else res = -1;
+		}
+		else
+		{
+			if (p1.compareDate() > p2.compareDate()) res = 1;
 			else res = -1;
 		}
 

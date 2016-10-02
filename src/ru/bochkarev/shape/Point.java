@@ -1,5 +1,6 @@
 package ru.bochkarev.shape;
 
+import java.util.*;
 import ru.bochkarev.tools.Moveable;
 
 public class Point implements Moveable
@@ -8,6 +9,7 @@ public class Point implements Moveable
 	protected double x, y, z;
 	private int id;
 	private static int nextId = 1;
+	private Calendar calendar;
 
 	{
 		id = nextId++;
@@ -18,6 +20,7 @@ public class Point implements Moveable
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		calendar = Calendar.getInstance();
 	}
 
 	public Point (Point p)
@@ -51,8 +54,16 @@ public class Point implements Moveable
 		return Math.sqrt(x*x + y*y + z*z);
 	}
 
+	public final String getDate(){
+		return calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + " " +calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
+	}
+
+	public long compareDate(){
+		return calendar.getTime().getTime();
+	}
+
 	public String toString()
 	{
-		return "id = " + id + ", " + name + "(" + x + ";" + y + ";" + z + ")";
+		return "id = " + id + ", " + name + "(" + x + ";" + y + ";" + z + "), " + getDate();
 	}
 }

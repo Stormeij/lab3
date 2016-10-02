@@ -208,6 +208,8 @@ public class Lab3
 		System.out.println("\t4 - По имени (убывание)");
 		System.out.println("\t5 - По удаленности от начала координат (возрастание)");
 		System.out.println("\t6 - По удаленности от начала координат (убывание)");
+		System.out.println("\t7 - По дате создания (возрастание)");
+		System.out.println("\t8 - По дате создания (убывание)");
 
 		System.out.print("Ввод > ");
 		buffer = reader.readLine();
@@ -215,7 +217,8 @@ public class Lab3
 		// else if (buffer.equals("1") || buffer.equals("2")) mode = 1;
 		else if (buffer.equals("3") || buffer.equals("4")) mode = 2;
 		else if (buffer.equals("5") || buffer.equals("6")) mode = 3;
-		boolean sortUp = (buffer.equals("2") || buffer.equals("4") || buffer.equals("6"));
+		else if (buffer.equals("7") || buffer.equals("8")) mode = 4;
+		boolean sortUp = (buffer.equals("2") || buffer.equals("4") || buffer.equals("6") || buffer.equals("8"));
 
 		Collections.sort(list, new SortMode(mode, sortUp));
 		PrintList();

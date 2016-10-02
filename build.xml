@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project name="lab3" default="all" >
+
+	<property name="src_dir" value="src"/>
+	<property name="bin_dir" value="bin"/>
+	<property name="lib_dir" value="lib"/>
+	<property name="doc_dir" value="doc"/>
+	<property name="test_dir" value="test"/>
+	<property name="test_bin_dir" value="${test_dir}/bin"/>
+	<property name="test_src_dir" value="${test_dir}/src"/>
+	<property name="junit_dir" value="test/lib"/>
+
+	<path id="classpath">
+		<path location="${junit_dir}">
+			<fileset dir="${junit_dir}" includes="*.jar"/>
+		</path>
+	    <path location="${bin_dir}"/>
+	</path>
+
+	<target name="compile" depends="clean, mkdirs">
+		<echo>Compile...</echo>
+		<javac destdir="${bin_dir}" srcdir="${src_dir}" includeantruntime="true"/>
+		<javac classpathref="classpath" includeantruntime="true" destdir="${test_bin_dir}" srcdir="${test_src_dir}"/>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit haltonerror="true" printsummary="true" haltonfailure="true">
+			<classpath>
+				<path refid="classpath"/>
+				<pathelement location="${test_bin_dir}"/>
+			</classpath>
+			<!--usefile="false" - Print errors on screen else (true) to file-->
+			<formatter type="plain" usefile="false"/>
+			<batchtest fork="yes">
+				<fileset dir="${test_bin_dir}"/>
+			</batchtest>
+		</junit>
+	</target>
+
+    <target name="mkdirs" description="Create directories">
+        <echo>Create directories</echo>
+        <mkdir dir="${bin_dir}"/> 
+        <mkdir dir="${doc_dir}"/> 
+        <mkdir dir="${lib_dir}"/>
+        <mkdir dir="${test_bin_dir}"/>
+    </target> 
+
+    <target name="all" description="Clean and build project" depends="compile"> 
+        <echo>Clean and build project</echo>
+        <javadoc sourcepath="${src_dir}" destdir="${doc_dir}"/> 
+        <jar destfile="${lib_dir}/Lab3.jar" basedir="${bin_dir}"> 
+            <manifest> 
+                <attribute name="Main-Class" value="ru.bochkarev.lab3.Lab3"/>
+           </manifest> 
+        </jar> 
+    </target>
+
+    <target name="clean" description="Clean project"> 
+        <echo>Remove directories</echo> 
+        <delete dir="${bin_dir}"/> 
+        <delete dir="${doc_dir}"/> 
+        <delete dir="${lib_dir}"/>
+        <delete dir="${test_bin_dir}"/>
+    </target>
+</project>
